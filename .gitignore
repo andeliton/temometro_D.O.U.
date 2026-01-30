@@ -1,0 +1,16 @@
+.Rproj.user
+.Rhistory
+.RData
+.DS_Store
+temometro_dou.Rproj
+# --- PASTAS DE DEPLOY (Não subir) ---
+rsconnect/
+
+# --- DADOS PESADOS E TEMPORÁRIOS (Não subir) ---
+dados_zips_download/
+dados_xml_extraidos/
+temp_xml_extract/
+dados_processados_ano/
+
+# --- EXCEÇÃO (Permitir apenas a base final leve) ---
+!base_dou_dashboard.parquet

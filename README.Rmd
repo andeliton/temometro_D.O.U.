@@ -1,0 +1,46 @@
+# 📉 Termômetro DOU (Official Gazette Thermometer)
+
+![R](https://img.shields.io/badge/R-4.4%2B-blue)
+![Shiny](https://img.shields.io/badge/Shiny-1.8-blue)
+![ETL](https://img.shields.io/badge/ETL-Crawler%20%2B%20NLP-green)
+
+<div align="center">
+  <a href="#-english">English</a> |
+  <a href="#-português">🇧🇷 Português</a>
+</div>
+
+---
+
+<div id="-english"></div>
+
+##English
+
+### 🏛️ About the Project
+**Termômetro DOU** is a Business Intelligence dashboard that monitors the Brazilian Federal Administration's pulse. It tracks personnel acts (Nominations vs. Exonerations) published in the **Official Gazette (DOU)**.
+
+### ⚙️ How it Works (The Pipeline)
+1.  **Crawler (`01_crawler_dou.R`):** Scrapes the official government portal (`in.gov.br`), identifies dynamic download links for "Section 2", and downloads monthly ZIP files.
+2.  **Processing (`02_processamento_xml.R`):** Unpacks ZIPs, parses thousands of XML files, and uses **Regex** to classify acts.
+3.  **Visualization (`app.R`):** Displays the "bureaucratic churn" and net balance of the federal workforce.
+
+### 🛠️ Tech Stack
+* **Core:** R, Shiny, `bslib`
+* **Data Eng:** `rvest` (Crawling), `xml2` (Parsing), `arrow` (Parquet storage).
+
+---
+
+<div id="-português"></div>
+
+## 🇧🇷 Português
+
+### 🏛️ Sobre o Projeto
+O **Termômetro DOU** é um dashboard que monitora o pulso da Administração Pública Federal. Ele rastreia atos de pessoal (Nomeações vs. Exonerações) publicados no **Diário Oficial da União (DOU)**.
+
+### ⚙️ Como Funciona (Pipeline)
+1.  **Crawler (`01_crawler_dou.R`):** Navega no portal `in.gov.br`, localiza links dinâmicos da "Seção 2" e baixa arquivos ZIP mensais.
+2.  **Processamento (`02_processamento_xml.R`):** Descompacta os ZIPs, processa milhares de XMLs e usa **Regex** para classificar os atos.
+3.  **Visualização (`app.R`):** Exibe a rotatividade burocrática e o saldo líquido da força de trabalho.
+
+### 🛠️ Tecnologias
+* **Core:** R, Shiny, `bslib`
+* **Engenharia de Dados:** `rvest` (Crawling), `xml2` (Parsing), `arrow` (Parquet).
