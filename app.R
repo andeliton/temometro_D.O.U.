@@ -4,6 +4,7 @@ library(tidyverse)
 library(arrow)
 library(plotly)
 library(waiter)
+library(lubridate) # Essencial para extrair o Ano da Data
 
 # ==============================================================================
 # 0. DADOS GLOBAIS
@@ -70,7 +71,7 @@ ui <- page_sidebar(
   # --- TELA DE CARREGAMENTO PERSONALIZADA ---
   waiter_show_on_load(
     html = tagList(
-      # Logo pulsante
+      # Logo pulsante (Se não tiver imagem, ele ignora sem quebrar)
       img(src = "favicon_light.png", height = "180px", style = "margin-bottom: 20px; animation: pulse 2s infinite; filter: drop-shadow(0px 5px 5px rgba(0,0,0,0.1));"),
       h4("Ars Metrica", style = "color: #2c3e50; font-family: sans-serif; font-weight: 600; letter-spacing: 2px;"),
       div("Carregando dados do Diário Oficial...", style = "color: #7f8c8d; font-size: 0.9em; margin-top: 10px;")
@@ -144,16 +145,22 @@ server <- function(input, output, session) {
   
   # 1. Carregamento
   dados_dou <- reactive({
-    on.exit({ waiter_hide() }) # O Waiter some automaticamente quando isso termina
-    Sys.sleep(1.5) # Tempo extra para ver a animação bonita da Ars Metrica
+    on.exit({ waiter_hide() }) 
+    Sys.sleep(1.0) 
     
     arquivo <- "base_dou_dashboard.parquet"
     if (!file.exists(arquivo)) return(NULL)
     
     tryCatch({
       read_parquet(arquivo) %>%
-        mutate(Data = as.Date(Data), Ano = as.integer(Ano),
-               Exoneracoes = replace_na(Exoneracoes, 0), Nomeacoes = replace_na(Nomeacoes, 0))
+        mutate(
+          Data = as.Date(Data),
+          # --- AQUI ESTAVA O ERRO ---
+          # Criamos o Ano a partir da Data, pois a coluna 'Ano' não existe no arquivo original
+          Ano = year(Data), 
+          Exoneracoes = replace_na(Exoneracoes, 0), 
+          Nomeacoes = replace_na(Nomeacoes, 0)
+        )
     }, error = function(e) return(NULL))
   })
   
