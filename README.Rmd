@@ -44,3 +44,6 @@ O **Termômetro DOU** é um dashboard que monitora o pulso da Administração P�
 ### 🛠️ Tecnologias
 * **Core:** R, Shiny, `bslib`
 * **Engenharia de Dados:** `rvest` (Crawling), `xml2` (Parsing), `arrow` (Parquet).
+
+---
+*Developed by Andéliton Soares*
